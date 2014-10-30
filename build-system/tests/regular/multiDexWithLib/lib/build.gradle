@@ -1,0 +1,17 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion 19
+  buildToolsVersion = rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    useJack rootProject.ext.useJack
+  }
+
+  buildTypes {
+    debug {
+      // needed for the test app.
+      multiDexEnabled = true
+    }
+  }
+}
