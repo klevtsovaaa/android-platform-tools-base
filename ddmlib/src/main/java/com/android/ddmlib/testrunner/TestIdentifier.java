@@ -23,6 +23,7 @@ public class TestIdentifier {
 
     private final String mClassName;
     private final String mTestName;
+    private final String mAnnotationTest;
 
     /**
      * Creates a test identifier.
@@ -30,13 +31,14 @@ public class TestIdentifier {
      * @param className fully qualified class name of the test. Cannot be null.
      * @param testName name of the test. Cannot be null.
      */
-    public TestIdentifier(String className, String testName) {
-        if (className == null || testName == null) {
+    public TestIdentifier(String className, String testName, String annotationTest) {
+        if (className == null || testName == null || annotationTest == null) {
             throw new IllegalArgumentException("className and testName must " +
                     "be non-null");
         }
         mClassName = className;
         mTestName = testName;
+        mAnnotationTest = annotationTest;
     }
 
     /**
@@ -53,12 +55,20 @@ public class TestIdentifier {
         return mTestName;
     }
 
+    /**
+     * Returns the annotation of the test.
+     */
+    public String getAnnotationTest() {
+        return mAnnotationTest;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((mClassName == null) ? 0 : mClassName.hashCode());
         result = prime * result + ((mTestName == null) ? 0 : mTestName.hashCode());
+        result = prime * result + ((mTestName == null) ? 0 : mAnnotationTest.hashCode());
         return result;
     }
 
@@ -81,11 +91,16 @@ public class TestIdentifier {
                 return false;
         } else if (!mTestName.equals(other.mTestName))
             return false;
+        if (mAnnotationTest == null) {
+            if (other.mAnnotationTest != null)
+                return false;
+        } else if (!mAnnotationTest.equals(other.mAnnotationTest))
+            return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return String.format("%s#%s", getClassName(), getTestName());
+        return String.format("%s#%s", getClassName(), getTestName(), getAnnotationTest());
     }
 }
